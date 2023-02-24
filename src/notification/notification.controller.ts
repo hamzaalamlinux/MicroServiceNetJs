@@ -24,18 +24,19 @@ export class NotificationController {
     }
     @Post()
     async notify(@Body() message: any) {
-        const { to, type } = message;
-        switch (type) {
-            case 'placed':
+        const { notificationType } = message;
+        switch (notificationType) {
+            case 'ORDER_DELIVERY':
                 try {
                     await this.notificationService.sendEmail(
-                        to,
-                        'Order Placed',
+                        message.businessMetadata.email,
+                        'Order Delivery',
                         'Order {{ orderId }} has been placed.',
-                        { orderId: message.orderId },
+                        message,
+                        message.recepientInfo.recipientName
                     );
                     await this.notificationService.sendSMS(
-                        to,
+                        message.businessMetadata.phoneNumber,
                         `Order ${message.orderId} has been placed.`,
                     );
                 } catch (error) {
@@ -44,26 +45,29 @@ export class NotificationController {
                 break;
             case 'rejected':
                 await this.notificationService.sendEmail(
-                    to,
+                    message.businessMetadata.email,
                     'Order Rejected',
                     'Order {{ orderId }} has been rejected.',
-                    { orderId: message.orderId },
+                    message,
+                    message.recepientInfo.recipientName
                 );
                 await this.notificationService.sendSMS(
-                    to,
-                    `Order ${message.orderId} has been rejected.`,
+                    message.businessMetadata.phoneNumber,
+                    `Order ${message.content.orderId} has been rejected.`,
                 );
                 break;
             case 'cancelled':
                 await this.notificationService.sendEmail(
-                    to,
+                    message.businessMetadata.email,
                     'Order Cancelled',
                     'Order {{ orderId }} has been cancelled.',
-                    { orderId: message.orderId },
+                    message,
+                    message.recepientInfo.recipientName
                 );
                 await this.notificationService.sendSMS(
-                    to,
-                    `Order ${message.orderId} has been cancelled.`,
+                    message.businessMetadata.phoneNumber,
+                    `Order ${message.content.orderId} has been cancelled.`,
+
                 );
                 break;
             default:
