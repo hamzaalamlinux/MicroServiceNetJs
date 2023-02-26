@@ -36,10 +36,15 @@ export class NotificationService {
             await fs.promises.readFile('src/notification/EmailTemplate/PlacedOrder.html', 'utf-8')
         );
 
+        const total = parseFloat(data.orderMetadata.subtotal) + parseFloat(data.orderMetadata.deliveryCharge
+        ) + parseFloat(data.orderMetadata.discount) + parseFloat(data.orderMetadata.bagFee) + parseFloat(data.orderMetadata.serviceFee);
+
+
         const html = templates({
             title: title,
             heading: heading,
             data: data,
+            total: total.toFixed(2)
         });
 
         emailRecipient.email = to;

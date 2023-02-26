@@ -144,7 +144,7 @@
                                                                                             {{data.description}}</p>
                                                                                         <p
                                                                                             style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:Nunito, Roboto, sans-serif;line-height:45px;color:#0F181A;font-size:30px">
-                                                                                            <strong>9:15 PM</strong>
+                                                                                            <strong>{{data.orderMetadata.estimatedTime}}</strong>
                                                                                         </p>
                                                                                     </td>
                                                                                 </tr>
@@ -768,7 +768,7 @@
                                                                                                         style="padding:0;Margin:0;padding-top:5px">
                                                                                                         <h3
                                                                                                             style="Margin:0;line-height:24px;mso-line-height-rule:exactly;font-family:'Fredoka One', helvetica, arial, sans-serif;font-size:20px;font-style:normal;font-weight:normal;color:#0F181A">
-                                                                                                            <b>£<span
+                                                                                                            <b><span
                                                                                                                     style="color:#8B4513">£{{data.orderMetadata.discount}}</span></b>
                                                                                                         </h3>
                                                                                                     </td>
@@ -799,7 +799,7 @@
                                                                                                         style="padding:0;Margin:0;padding-top:10px">
                                                                                                         <h3
                                                                                                             style="Margin:0;line-height:24px;mso-line-height-rule:exactly;font-family:'Fredoka One', helvetica, arial, sans-serif;font-size:20px;font-style:normal;font-weight:normal;color:#0F181A">
-                                                                                                            <b>£{{data.total}}</b>
+                                                                                                            <b>£{{total}}</b>
                                                                                                         </h3>
                                                                                                     </td>
                                                                                                 </tr>
@@ -881,7 +881,8 @@
                                                                                         style="padding:0;Margin:0;padding-bottom:20px">
                                                                                         <h2
                                                                                             style="Margin:0;line-height:38px;mso-line-height-rule:exactly;font-family:'Fredoka One', helvetica, arial, sans-serif;font-size:32px;font-style:normal;font-weight:normal;color:#0F181A">
-                                                                                            {{data.recepientInfo.deliveryAddress}}
+
+                                                                                            Delivery Address
                                                                                         </h2>
                                                                                     </td>
                                                                                 </tr>
@@ -894,10 +895,11 @@
                                                                                         </p>
                                                                                         <p
                                                                                             style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:Nunito, Roboto, sans-serif;line-height:21px;color:#0F181A;font-size:14px">
-                                                                                            78 Somewhere St</p>
-                                                                                        <p
+                                                                                            {{data.recepientInfo.deliveryAddress}}
+                                                                                        </p>
+                                                                                        <!-- <p
                                                                                             style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:Nunito, Roboto, sans-serif;line-height:21px;color:#0F181A;font-size:14px">
-                                                                                            Somewhere, Canada 99743</p>
+                                                                                            Somewhere, Canada 99743</p> -->
                                                                                     </td>
                                                                                 </tr>
                                                                             </tbody>
@@ -987,10 +989,10 @@
         </v:roundrect></a>
     <![endif]--><!--[if !mso]><!-- --><span class="msohide es-button-border" style="border-style:solid;border-color:#2CB543;background:#F1BA0A;border-width:0px;display:inline-block;border-radius:30px;width:auto;mso-hide:all"><a
                                                                                                 href="tel:+(000)123456789"
-                                                                                                class="es-button"
+                                                                                                class="{{data.businessMetadata.phoneNumber}}"
                                                                                                 target="_blank"
                                                                                                 style="mso-style-priority:100 !important;text-decoration:none;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;color:#0F181A;font-size:16px;border-style:solid;border-color:#F1BA0A;border-width:10px 30px 10px 30px;display:inline-block;background:#F1BA0A;border-radius:30px;font-family:Nunito, Roboto, sans-serif;font-weight:bold;font-style:normal;line-height:19px;width:auto;text-align:center">+
-                                                                                                (000) 123 456 789<img
+                                                                                                {{data.businessMetadata.phoneNumber}}<img
                                                                                                     src="https://mfbsbn.stripocdn.email/content/guids/CABINET_37fa9af71c93e641990ef539715b0b24/images/group_361.png"
                                                                                                     alt="icon"
                                                                                                     width="20"
@@ -1007,10 +1009,10 @@
             <center style='color:#0f181a; font-family:Nunito, Roboto, sans-serif; font-size:14px; font-weight:700; line-height:14px;  mso-text-raise:1px'>fresh_in_box@email</center>
         </v:roundrect></a>
     <![endif]--><!--[if !mso]><!-- --><span class="msohide es-button-border" style="border-style:solid;border-color:#2CB543;background:#F1BA0A;border-width:0px;display:inline-block;border-radius:30px;width:auto;mso-hide:all"><a
-                                                                                                href="mailto:fresh_in_box@email"
+                                                                                                href="{{data.businessMetadata.email}}"
                                                                                                 class="es-button"
                                                                                                 target="_blank"
-                                                                                                style="mso-style-priority:100 !important;text-decoration:none;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;color:#0F181A;font-size:16px;border-style:solid;border-color:#F1BA0A;border-width:10px 30px 10px 30px;display:inline-block;background:#F1BA0A;border-radius:30px;font-family:Nunito, Roboto, sans-serif;font-weight:bold;font-style:normal;line-height:19px;width:auto;text-align:center">fresh_in_box@email<img
+                                                                                                style="mso-style-priority:100 !important;text-decoration:none;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;color:#0F181A;font-size:16px;border-style:solid;border-color:#F1BA0A;border-width:10px 30px 10px 30px;display:inline-block;background:#F1BA0A;border-radius:30px;font-family:Nunito, Roboto, sans-serif;font-weight:bold;font-style:normal;line-height:19px;width:auto;text-align:center">{{data.businessMetadata.email}}<img
                                                                                                     src="https://mfbsbn.stripocdn.email/content/guids/CABINET_37fa9af71c93e641990ef539715b0b24/images/group_361.png"
                                                                                                     alt="icon"
                                                                                                     width="20"
@@ -1027,7 +1029,7 @@
             <center style='color:#0f181a; font-family:Nunito, Roboto, sans-serif; font-size:14px; font-weight:700; line-height:14px;  mso-text-raise:1px'>Visit our Website</center>
         </v:roundrect></a>
     <![endif]--><!--[if !mso]><!-- --><span class="msohide es-button-border" style="border-style:solid;border-color:#2CB543;background:#F1BA0A;border-width:0px;display:inline-block;border-radius:30px;width:auto;mso-hide:all"><a
-                                                                                                href="https://koshi.co.uk"
+                                                                                                href="{{data.businessMetadata.website}}"
                                                                                                 class="es-button"
                                                                                                 target="_blank"
                                                                                                 style="mso-style-priority:100 !important;text-decoration:none;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;color:#0F181A;font-size:16px;border-style:solid;border-color:#F1BA0A;border-width:10px 30px 10px 30px;display:inline-block;background:#F1BA0A;border-radius:30px;font-family:Nunito, Roboto, sans-serif;font-weight:bold;font-style:normal;line-height:19px;width:auto;text-align:center">Visit
@@ -1041,18 +1043,31 @@
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <td align="center"
-                                                                                        style="padding:0;Margin:0;padding-top:10px;padding-bottom:20px"><!--[if mso]><a href="https://koshi.co.uk" target="_blank" hidden>
-        <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" esdevVmlButton href="https://koshi.co.uk" 
-                    style="height:40px; v-text-anchor:middle; width:213px" arcsize="50%" stroke="f"  fillcolor="#f1ba0a">
-            <w:anchorlock></w:anchorlock>
-            <center style='color:#0f181a; font-family:Nunito, Roboto, sans-serif; font-size:14px; font-weight:700; line-height:14px;  mso-text-raise:1px'>Download Our App</center>
-        </v:roundrect></a>
-    <![endif]--><!--[if !mso]><!-- --><span class="msohide es-button-border" style="border-style:solid;border-color:#2CB543;background:#F1BA0A;border-width:0px;display:inline-block;border-radius:30px;width:auto;mso-hide:all"><a
-                                                                                                href="https://koshi.co.uk"
+                                                                                        style="padding:0;Margin:0;padding-top:10px;padding-bottom:20px">
+                                                                                        <span
+                                                                                            class="msohide es-button-border"
+                                                                                            style="border-style:solid;border-color:#2CB543;background:#F1BA0A;border-width:0px;display:inline-block;border-radius:30px;width:auto;mso-hide:all"><a
+                                                                                                href="{{data.businessMetadata.appLinkIOS}}"
                                                                                                 class="es-button"
                                                                                                 target="_blank"
                                                                                                 style="mso-style-priority:100 !important;text-decoration:none;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;color:#0F181A;font-size:16px;border-style:solid;border-color:#F1BA0A;border-width:10px 30px 10px 30px;display:inline-block;background:#F1BA0A;border-radius:30px;font-family:Nunito, Roboto, sans-serif;font-weight:bold;font-style:normal;line-height:19px;width:auto;text-align:center">Download
-                                                                                                Our App<img
+                                                                                                Our IOS App<img
+                                                                                                    src="https://mfbsbn.stripocdn.email/content/guids/CABINET_37fa9af71c93e641990ef539715b0b24/images/group_361.png"
+                                                                                                    alt="icon"
+                                                                                                    width="20"
+                                                                                                    align="absmiddle"
+                                                                                                    style="display:inline-block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic;vertical-align:middle;margin-left:10px"></a></span><!--<![endif]-->
+                                                                                        </v:roundrect>
+                                                                                        </a>
+                                                                                        <br><br>
+                                                                                        <span
+                                                                                            class="msohide es-button-border"
+                                                                                            style="border-style:solid;border-color:#2CB543;background:#F1BA0A;border-width:0px;display:inline-block;border-radius:30px;width:auto;mso-hide:all"><a
+                                                                                                href="{{data.businessMetadata.appLinkAndroid}}"
+                                                                                                class="es-button"
+                                                                                                target="_blank"
+                                                                                                style="mso-style-priority:100 !important;text-decoration:none;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;color:#0F181A;font-size:16px;border-style:solid;border-color:#F1BA0A;border-width:10px 30px 10px 30px;display:inline-block;background:#F1BA0A;border-radius:30px;font-family:Nunito, Roboto, sans-serif;font-weight:bold;font-style:normal;line-height:19px;width:auto;text-align:center">Download
+                                                                                                Our Android App<img
                                                                                                     src="https://mfbsbn.stripocdn.email/content/guids/CABINET_37fa9af71c93e641990ef539715b0b24/images/group_361.png"
                                                                                                     alt="icon"
                                                                                                     width="20"

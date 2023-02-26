@@ -43,7 +43,7 @@ export class NotificationController {
                     console.log(error);
                 }
                 break;
-            case 'rejected':
+            case 'ORDER_CONFIRMATION':
                 await this.notificationService.sendEmail(
                     message.businessMetadata.email,
                     'Order Rejected',
@@ -56,7 +56,7 @@ export class NotificationController {
                     `Order ${message.content.orderId} has been rejected.`,
                 );
                 break;
-            case 'cancelled':
+            case 'DISCOUNT':
                 await this.notificationService.sendEmail(
                     message.businessMetadata.email,
                     'Order Cancelled',
