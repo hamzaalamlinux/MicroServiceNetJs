@@ -6,7 +6,7 @@ import { NotificationController } from './notification/notification.controller';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(new ValidationPipe());
-  await app.listen(process.env.PORT || 3000);
+  await app.listen(process.env.PORT || 4000);
   // const pubsub = new PubSub({
   //   projectId: 'double-balm-378512'
   // });

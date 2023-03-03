@@ -17,7 +17,7 @@ export class NotificationService {
         );
     }
 
-    async sendEmail(to: string, subject: string, template: string, data: any, reciptname: string) {
+    async sendEmail(to: string, subject: string, template: string, data: any, reciptname: string , theme : string) {
         var emailRecipient = new ClickSend.EmailRecipient();
         // const html = Handlebars.compile(template)(data);
         // const mailOptions = {
@@ -33,7 +33,7 @@ export class NotificationService {
 
 
         const templates = Handlebars.compile(
-            await fs.promises.readFile('src/notification/EmailTemplate/PlacedOrder.html', 'utf-8')
+            await fs.promises.readFile(`src/notification/EmailTemplate/${theme}`, 'utf-8')
         );
 
         const total = parseFloat(data.orderMetadata.subtotal) + parseFloat(data.orderMetadata.deliveryCharge
