@@ -32,8 +32,7 @@ export class NotificationController {
                 if(message.channel.email ==  "YES"){
                     await this.notificationService.sendEmail(
                         message.businessMetadata.email,
-                        'Order Cancelled',
-                        'Order {{ orderId }} has been rejected.',
+                        message.subject,
                         message,
                         message.recepientInfo.recipientName,
                         "Order_Confirmation_Delivery_CANCELLED.html"
@@ -51,8 +50,7 @@ export class NotificationController {
                 if(message.channel.email ==  "YES"){
                     await this.notificationService.sendEmail(
                         message.businessMetadata.email,
-                        'Order Not Paid',
-                        'Order {{ orderId }} has been cancelled.',
+                        message.subject,
                         message,
                         message.recepientInfo.recipientName,
                         "Order_Confirmation_Delivery_NOT_PAID.html"
@@ -71,8 +69,7 @@ export class NotificationController {
                     if(message.channel.email ==  "YES"){
                         await this.notificationService.sendEmail(
                             message.businessMetadata.email,
-                            'Order Paid',
-                            'Order {{ orderId }} has been cancelled.',
+                            message.subject,
                             message,
                             message.recepientInfo.recipientName,
                             "Order_Confirmation_Delivery_PAID.html"
@@ -91,8 +88,7 @@ export class NotificationController {
                     if(message.channel.email ==  "YES"){
                         await this.notificationService.sendEmail(
                             message.email,
-                            'Account Activation',
-                            'Order  has been cancelled.',
+                            message.subject,
                             message,
                             message.recipientName,
                             "Accountdeactivation.html"
@@ -111,8 +107,7 @@ export class NotificationController {
                     if(message.channel.email ==  "YES"){
                         await this.notificationService.sendEmail(
                             message.businessMetadata.email,
-                            'Discount',
-                            'Order {{ orderId }} has been cancelled.',
+                            message.subject,
                             message,
                             message.recepientInfo.recipientName,
                             "Discount.html"
@@ -130,8 +125,7 @@ export class NotificationController {
                     if(message.channel.email ==  "YES"){
                         await this.notificationService.sendEmail(
                             message.businessMetadata.email,
-                            'Generic Announcement',
-                            'Order {{ orderId }} has been cancelled.',
+                            message.subject,
                             message,
                             message.recepientInfo.recipientName,
                             "Genericannouncement.html"
@@ -150,8 +144,7 @@ export class NotificationController {
                     if(message.channel.email ==  "YES"){
                         await this.notificationService.sendEmail(
                             message.businessMetadata.email,
-                            'Customer Onboarding',
-                            'Order {{ orderId }} has been cancelled.',
+                            message.subject,
                             message,
                             message.recepientInfo.recipientName,
                             "GrubDirectCustomerOnboarding.html"
@@ -170,8 +163,7 @@ export class NotificationController {
                     if(message.channel.email ==  "YES"){
                         await this.notificationService.sendEmail(
                             message.businessMetadata.email,
-                            'Outstanding Balance',
-                            'Order {{ orderId }} has been cancelled.',
+                            message.subject,
                             message,
                             message.recepientInfo.recipientName,
                             "Outstandingbalance.html"
@@ -191,8 +183,7 @@ export class NotificationController {
                     if(message.channel.email ==  "YES"){
                         await this.notificationService.sendEmail(
                             message.businessMetadata.email,
-                            'Rectified',
-                            'Order {{ orderId }} has been cancelled.',
+                            message.subject,
                             message,
                             message.recepientInfo.recipientName,
                             "Rectified.html"
@@ -211,8 +202,7 @@ export class NotificationController {
                     if(message.channel.email ==  "YES"){
                         await this.notificationService.sendEmail(
                             message.businessMetadata.email,
-                            'Reservation Confirmation',
-                            'Order {{ orderId }} has been cancelled.',
+                            message.subject,
                             message,
                             message.recepientInfo.recipientName,
                             "ReservationConfirmation.html"

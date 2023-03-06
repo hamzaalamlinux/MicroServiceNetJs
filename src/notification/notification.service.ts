@@ -4,45 +4,34 @@ import * as Handlebars from 'handlebars';
 import * as ClickSend from 'clicksend';
 import { Response } from 'express';
 import * as fs from 'fs';
-
+import { Model } from "mongoose";
+import { InjectModel } from '@nestjs/mongoose/dist/common';
+import { ILogs } from 'src/Interface/logs.interface';
 
 @Injectable()
 export class NotificationService {
     private readonly clicksendClient: ClickSend.TransactionalEmailApi;
-
-    constructor(private readonly mailerService: MailerService) {
+   
+    constructor(private readonly mailerService: MailerService , @InjectModel('Logs') private LogsModel:Model<ILogs>) {
         this.clicksendClient = new ClickSend.TransactionalEmailApi(
             'info@grubdirect.co.uk',
             '2545F418-B207-54E7-538E-34E1112762F0',
         );
     }
+    
 
-    async sendEmail(to: string, subject: string, template: string, data: any, reciptname: string , theme : string) {
+    async sendEmail(to: string, subject: string,  data: any, reciptname: string , theme : string) {
         var emailRecipient = new ClickSend.EmailRecipient();
-        // const html = Handlebars.compile(template)(data);
-        // const mailOptions = {
-        //     to,
-        //     subject,
-        //     html,
-        // };
-        // await this.mailerService.sendMail(mailOptions);
-        // read the HTML template file
-        // const templates = fs.readFileSync('src/notification/PlacedOrder.html', 'utf8');
-        const title = 'My Page';
-        const heading = 'My Heading';
-
-
         const templates = Handlebars.compile(
             await fs.promises.readFile(`src/notification/EmailTemplate/${theme}`, 'utf-8')
         );
 
+
+       
         const total = parseFloat(data.orderMetadata.subtotal) + parseFloat(data.orderMetadata.deliveryCharge
         ) + parseFloat(data.orderMetadata.discount) + parseFloat(data.orderMetadata.bagFee) + parseFloat(data.orderMetadata.serviceFee);
 
-
         const html = templates({
-            title: title,
-            heading: heading,
             data: data,
             total: total.toFixed(2)
         });
@@ -53,15 +42,7 @@ export class NotificationService {
         var emailFrom = new ClickSend.EmailFrom();
 
         emailFrom.emailAddressId = '25448';
-        emailFrom.name = "john";
-
-        // var attachment = new ClickSend.Attachment();
-
-        // attachment.content = "ZmlsZSBjb250ZW50cw==";
-        // attachment.type = "text/plain";
-        // attachment.filename = "text.txt";
-        // attachment.disposition = "attachment";
-        // attachment.contentId = "text";
+        emailFrom.name = reciptname;
 
         var email = new ClickSend.Email();
 
