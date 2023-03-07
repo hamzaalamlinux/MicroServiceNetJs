@@ -16,8 +16,8 @@ export class NotificationService {
    
     constructor(@InjectModel('Logs') private LogsModel:Model<ILogs>) {
         this.clicksendClient = new ClickSend.TransactionalEmailApi(
-            'info@grubdirect.co.uk',
-            '2545F418-B207-54E7-538E-34E1112762F0',
+            process.env.CLICK_SEND_USER,
+            process.env.CLICK_SEND_PASSWORD,
         );
     }
 
@@ -37,9 +37,10 @@ export class NotificationService {
        
         const total = parseFloat(data.orderMetadata.subtotal) + parseFloat(data.orderMetadata.deliveryCharge
         ) + parseFloat(data.orderMetadata.discount) + parseFloat(data.orderMetadata.bagFee) + parseFloat(data.orderMetadata.serviceFee);
-
+        
         const html = templates({
             data: data,
+            total_quantity : data.orderMetadata.orderItems.length,
             total: total.toFixed(2)
         });
 
@@ -48,7 +49,7 @@ export class NotificationService {
 
         var emailFrom = new ClickSend.EmailFrom();
 
-        emailFrom.emailAddressId = '25448';
+        emailFrom.emailAddressId = process.env.EMAIL_ADDRESS_ID;
         emailFrom.name = reciptname;
 
         var email = new ClickSend.Email();
@@ -68,7 +69,7 @@ export class NotificationService {
         smsMessage.from = "+923181162186";
         smsMessage.to = "+923181162186";
         smsMessage.body = "test message";
-        var smsApi = new ClickSend.SMSApi("info@grubdirect.co.uk", "2545F418-B207-54E7-538E-34E1112762F0");
+        var smsApi = new ClickSend.SMSApi(process.env.CLICK_SEND_USER, process.env.CLICK_SEND_PASSWORD);
         var smsCollection = new ClickSend.SmsMessageCollection();
         smsCollection.messages = [smsMessage];
         await smsApi.smsSendPost(smsCollection)

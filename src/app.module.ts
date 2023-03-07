@@ -7,12 +7,16 @@ import { MongooseModule } from '@nestjs/mongoose/dist/mongoose.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { LogsSchema } from './schema/logs.schema';
+import * as dotenv from 'dotenv';
 
+dotenv.config();
 @Module({
 
   imports: [
-    MongooseModule.forRoot('mongodb+srv://hamza:hackpeople12@logs.fvdv3ak.mongodb.net/?retryWrites=true&w=majority'),
-    ConfigModule.forRoot(),
+    MongooseModule.forRoot(process.env.DATABASE_URI),
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
     MongooseModule.forFeature([{ name: 'Logs', schema: LogsSchema }])
   ],
   controllers: [AppController , NotificationController],

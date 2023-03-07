@@ -2,21 +2,22 @@ import { Controller, Post, Body, Get } from '@nestjs/common';
 import { PubSub } from '@google-cloud/pubsub';
 import { NotificationService } from './notification.service';
 import { get } from 'http';
+import * as moment from 'moment';
 
 
 @Controller('notification')
 export class NotificationController {
     private readonly pubsub: PubSub;
 
-    constructor(private readonly notificationService: NotificationService) {
+    constructor(private readonly notificationService: NotificationService ) {
         this.pubsub = new PubSub();
     }
     @Get()
     async Trigger() {
         const pubsub = new PubSub({
-            projectId: 'double-balm-378512'
+            projectId: process.env.PROJECT_ID
         });
-        const subscription = pubsub.subscription('projects/double-balm-378512/subscriptions/MySub');
+        const subscription = pubsub.subscription(process.env.PROJECT_SUBCRIPTION);
         subscription.on('message', (message) => {
             console.log(message.data.toString());
             this.notify(JSON.parse(message.data.toString()));
@@ -25,10 +26,8 @@ export class NotificationController {
     }
     @Post()
     async notify(@Body() message: any) {
+        const now = moment.utc().format('YYYY-MM-DD HH:mm:ss');
         const { notificationType } = message;
-        const now = new Date();
-        const utcDate = new Date(now.getTime() + now.getTimezoneOffset() * 60000);
-        const options = { hour12: true };
         try{
         switch (notificationType) {
             
@@ -91,10 +90,10 @@ export class NotificationController {
                 case 'ACCOUNT_ACTIVITATION':
                     if(message.channel.email ==  "YES"){
                         await this.notificationService.sendEmail(
-                            message.email,
+                            message.businessMetadata.email,
                             message.subject,
                             message,
-                            message.recipientName,
+                            message.recepientInfo.recipientName,
                             "Accountdeactivation.html"
                         );
                     }
@@ -223,9 +222,10 @@ export class NotificationController {
                 
         }
         
-        this.notificationService.createLogs({"NotificationName" : message.subject , "notificationEvent" : message , "status" : "SENT" ,"DateTime" : utcDate.toLocaleString('en-US', options)})
+        this.notificationService.createLogs({"NotificationName" : message.subject , "notificationEvent" : message , "status" : "SENT" ,"DateTime" : now})
     }catch(error){
-        this.notificationService.createLogs({"NotificationName" : message.subject , "notificationEvent" :error , "status" : "FAILED" , "DateTime" :utcDate.toLocaleString('en-US', options)})
+         this.notificationService.createLogs({"NotificationName" : message.subject , "notificationEvent" :error , "status" : "FAILED" , "DateTime" :now})
+        console.log(error);
     }
     }
 
