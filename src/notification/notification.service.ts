@@ -7,17 +7,24 @@ import * as fs from 'fs';
 import { Model } from "mongoose";
 import { InjectModel } from '@nestjs/mongoose/dist/common';
 import { ILogs } from 'src/Interface/logs.interface';
+import { LogsDto } from 'src/dto/logs.dto';
+
 
 @Injectable()
 export class NotificationService {
     private readonly clicksendClient: ClickSend.TransactionalEmailApi;
    
-    constructor(private readonly mailerService: MailerService , @InjectModel('Logs') private LogsModel:Model<ILogs>) {
+    constructor(@InjectModel('Logs') private LogsModel:Model<ILogs>) {
         this.clicksendClient = new ClickSend.TransactionalEmailApi(
             'info@grubdirect.co.uk',
             '2545F418-B207-54E7-538E-34E1112762F0',
         );
     }
+
+    async createLogs(LogsDto: LogsDto): Promise<ILogs> {
+        const newLogs = await new this.LogsModel(LogsDto);
+        return newLogs.save();
+     }
     
 
     async sendEmail(to: string, subject: string,  data: any, reciptname: string , theme : string) {

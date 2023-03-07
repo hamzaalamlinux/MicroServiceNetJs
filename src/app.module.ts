@@ -4,24 +4,18 @@ import { MailerModule } from '@nestjs-modules/mailer';
 import { NotificationController } from './notification/notification.controller';
 import { NotificationService } from './notification/notification.service';
 import { MongooseModule } from '@nestjs/mongoose/dist/mongoose.module';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
+import { LogsSchema } from './schema/logs.schema';
 
 @Module({
 
   imports: [
     MongooseModule.forRoot('mongodb+srv://hamza:hackpeople12@logs.fvdv3ak.mongodb.net/?retryWrites=true&w=majority'),
     ConfigModule.forRoot(),
-    MailerModule.forRoot({
-      transport: {
-        host: 'smtp.gmail.com',
-        port: '465',
-        auth: {
-          user: 'createme501@gmail.com',
-          pass: "Dogmission1!",
-        },
-      },
-    }),
+    MongooseModule.forFeature([{ name: 'Logs', schema: LogsSchema }])
   ],
-  controllers: [NotificationController],
-  providers: [NotificationService],
+  controllers: [AppController , NotificationController],
+  providers: [AppService ,NotificationService],
 })
 export class AppModule { }

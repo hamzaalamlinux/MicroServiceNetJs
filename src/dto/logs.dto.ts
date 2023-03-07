@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsNumber, IsString, MaxLength } from "class-validator";
+import { IsDate, IsNotEmpty, IsNumber, IsObject, IsString, MaxLength } from "class-validator";
 export class LogsDto {
     @IsString()
     @MaxLength(30)
@@ -8,9 +8,13 @@ export class LogsDto {
     @IsNotEmpty()
     readonly status: string;
     
+    @IsObject()
+    @IsNotEmpty()
+    readonly notificationEvent: object;
+
     @IsString()
     @IsNotEmpty()
-    readonly object: string;
+    readonly DateTime : string;
 }
 
 export const LogsDtos = LogsDto;

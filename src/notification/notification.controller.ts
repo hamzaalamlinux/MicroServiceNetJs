@@ -3,6 +3,7 @@ import { PubSub } from '@google-cloud/pubsub';
 import { NotificationService } from './notification.service';
 import { get } from 'http';
 
+
 @Controller('notification')
 export class NotificationController {
     private readonly pubsub: PubSub;
@@ -25,6 +26,9 @@ export class NotificationController {
     @Post()
     async notify(@Body() message: any) {
         const { notificationType } = message;
+        const now = new Date();
+        const utcDate = new Date(now.getTime() + now.getTimezoneOffset() * 60000);
+        const options = { hour12: true };
         try{
         switch (notificationType) {
             
@@ -218,8 +222,10 @@ export class NotificationController {
                 break;
                 
         }
+        
+        this.notificationService.createLogs({"NotificationName" : message.subject , "notificationEvent" : message , "status" : "SENT" ,"DateTime" : utcDate.toLocaleString('en-US', options)})
     }catch(error){
-        console.log(error);
+        this.notificationService.createLogs({"NotificationName" : message.subject , "notificationEvent" :error , "status" : "FAILED" , "DateTime" :utcDate.toLocaleString('en-US', options)})
     }
     }
 
